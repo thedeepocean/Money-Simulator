@@ -20,7 +20,6 @@
 
 
 
-// dont worry just for STR to INT for text
 template <typename T>
 
 std::string toString(T arg) {
@@ -47,6 +46,7 @@ float moneyWorth = 3.0;
 bool stageOneHouse = true;
 bool stageTwoHouse = false;
 
+bool rookieCar = false;
 
 bool defaultClass = true;
 
@@ -66,7 +66,7 @@ bool millionaireClass = false;
 
 
 
-float money = 0.0;
+float money = 110000.0;
 
 
 
@@ -183,7 +183,7 @@ int main() {
 	sf::Time time;
 
 
-	// load the font
+
 	sf::Font font;
 
 	if (!font.loadFromFile("font.ttf")) {
@@ -230,6 +230,20 @@ int main() {
 	buyNewHouseSign.setPosition(635, 290);
 
 
+
+	sf::Text BuyMV;
+
+	BuyMV.setFont(font);
+
+	BuyMV.setString("Buy New Car");
+
+	BuyMV.setFillColor(sf::Color::Black);
+
+	BuyMV.setCharacterSize(15);
+
+	BuyMV.setPosition(635, 365);
+
+
 	sf::Texture SunTexture;
 
 	SunTexture.loadFromFile("sun.png");
@@ -251,15 +265,24 @@ int main() {
 	TractorTexture.loadFromFile("tractor.png");
 
 
-
 	sf::Sprite Tractor(TractorTexture);
-
-
 
 	Tractor.setPosition(420, 350);
 
 	Tractor.setScale(0.75, 0.75);
 
+
+	sf::Texture MiniTexture;
+
+
+	MiniTexture.loadFromFile("MiniVan.png");
+
+
+	sf::Sprite MiniVan(MiniTexture);
+
+	MiniVan.setPosition(490, 350);
+
+	MiniVan.setScale(0.5, 0.5);
 
 
 	sf::Texture DirtTexture;
@@ -306,7 +329,7 @@ int main() {
 
 	Barn.setScale(0.5f, 0.5f);
 
-	
+
 	sf::Texture BarnTwoTexture;
 	BarnTwoTexture.loadFromFile("BarnHouseStageTwo.png");
 
@@ -314,7 +337,7 @@ int main() {
 	BarnTwo.setPosition(-100, 145);
 	BarnTwo.setScale(0.5f, 0.5f);
 
-	// upgrade house button
+
 	sf::RectangleShape uphButton;
 
 	uphButton.setSize(sf::Vector2f(185, 50));
@@ -323,8 +346,7 @@ int main() {
 
 	uphButton.setPosition(630, 200);
 
-	
-	// buy house button
+
 	sf::RectangleShape bnhButton;
 
 	bnhButton.setSize(sf::Vector2f(185, 50));
@@ -332,6 +354,16 @@ int main() {
 	bnhButton.setFillColor(sf::Color::Yellow);
 
 	bnhButton.setPosition(630, 275);
+
+
+	sf::RectangleShape bncButton;
+
+	bncButton.setSize(sf::Vector2f(185, 50));
+
+	bncButton.setFillColor(sf::Color::Yellow);
+
+	bncButton.setPosition(630, 350);
+
 
 	//music.play();
 
@@ -356,12 +388,11 @@ int main() {
 		}
 
 
-		// mouse positions
+
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
 		sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-		// button pressed
 		if (event.type == sf::Event::MouseButtonPressed && uphButton.getGlobalBounds().contains(mousePosF) && HMUU < 1 && money >= 25000) {
 
 			moneyWorth += 1;
@@ -372,10 +403,7 @@ int main() {
 
 		}
 
-		// button pressed
 		if (event.type == sf::Event::MouseButtonPressed && bnhButton.getGlobalBounds().contains(mousePosF) && HMUU == 1 && money >= 60000) {
-
-			money -= 60000;
 
 			defaultClass = false;
 			rookieClass = true;
@@ -385,8 +413,17 @@ int main() {
 
 			Tractor.setPosition(490, 350);
 
+			money -= 60000;
 			moneyWorth += 0.5;
 			HMUU += 1;
+
+		}
+
+		if (event.type == sf::Event::MouseButtonPressed && bncButton.getGlobalBounds().contains(mousePosF) && money >= 25000) {
+			
+			rookieCar = true;
+
+			money -= 25000;
 
 		}
 
@@ -434,8 +471,13 @@ int main() {
 			window.draw(BarnTwo);
 		}
 
-		window.draw(Tractor);
+		if (rookieCar == true) {
+			window.draw(MiniVan);
+		}
 
+		if (rookieCar == false) {
+			window.draw(Tractor);
+		}
 		window.draw(Dirt);
 
 		window.draw(Grass);
@@ -446,9 +488,13 @@ int main() {
 
 		window.draw(bnhButton);
 
+		window.draw(bncButton);
+
 		window.draw(upgradeHouseSign);
 
 		window.draw(buyNewHouseSign);
+
+		window.draw(BuyMV);
 
 		window.display();
 
@@ -459,3 +505,4 @@ int main() {
 	return 0;
 
 }
+
