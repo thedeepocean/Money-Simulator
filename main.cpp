@@ -20,6 +20,7 @@
 
 
 
+// dont worry just for STR to INT for text
 template <typename T>
 
 std::string toString(T arg) {
@@ -182,7 +183,7 @@ int main() {
 	sf::Time time;
 
 
-
+	// load the font
 	sf::Font font;
 
 	if (!font.loadFromFile("font.ttf")) {
@@ -313,7 +314,7 @@ int main() {
 	BarnTwo.setPosition(-100, 145);
 	BarnTwo.setScale(0.5f, 0.5f);
 
-
+	// upgrade house button
 	sf::RectangleShape uphButton;
 
 	uphButton.setSize(sf::Vector2f(185, 50));
@@ -322,7 +323,8 @@ int main() {
 
 	uphButton.setPosition(630, 200);
 
-
+	
+	// buy house button
 	sf::RectangleShape bnhButton;
 
 	bnhButton.setSize(sf::Vector2f(185, 50));
@@ -354,11 +356,12 @@ int main() {
 		}
 
 
-
+		// mouse positions
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
 		sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
+		// button pressed
 		if (event.type == sf::Event::MouseButtonPressed && uphButton.getGlobalBounds().contains(mousePosF) && HMUU < 1 && money >= 25000) {
 
 			moneyWorth += 1;
@@ -369,7 +372,10 @@ int main() {
 
 		}
 
+		// button pressed
 		if (event.type == sf::Event::MouseButtonPressed && bnhButton.getGlobalBounds().contains(mousePosF) && HMUU == 1 && money >= 60000) {
+
+			money -= 60000;
 
 			defaultClass = false;
 			rookieClass = true;
@@ -453,4 +459,3 @@ int main() {
 	return 0;
 
 }
-
