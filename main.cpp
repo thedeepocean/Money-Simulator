@@ -43,6 +43,9 @@ int HMUU = 0;
 float moneyWorth = 3.0;
 
 
+bool stageOneHouse = true;
+bool stageTwoHouse = false;
+
 
 bool defaultClass = true;
 
@@ -62,7 +65,7 @@ bool millionaireClass = false;
 
 
 
-float money = 30000.0;
+float money = 0.0;
 
 
 
@@ -75,15 +78,15 @@ int addMoney() {
 			money += moneyWorth;
 		}
 
-			if (moneyWorth == 4.0) {
+		if (moneyWorth == 4.0) {
 
-				if (money < 60000) {
-	
-					money += moneyWorth;
+			if (money < 60000) {
 
-				}
+				money += moneyWorth;
 
 			}
+
+		}
 
 
 	}
@@ -302,6 +305,14 @@ int main() {
 
 	Barn.setScale(0.5f, 0.5f);
 
+	
+	sf::Texture BarnTwoTexture;
+	BarnTwoTexture.loadFromFile("BarnHouseStageTwo.png");
+
+	sf::Sprite BarnTwo(BarnTwoTexture);
+	BarnTwo.setPosition(-100, 145);
+	BarnTwo.setScale(0.5f, 0.5f);
+
 
 	sf::RectangleShape uphButton;
 
@@ -358,9 +369,18 @@ int main() {
 
 		}
 
-		if (event.type == sf::Event::MouseButtonPressed && bnhButton.getGlobalBounds().contains(mousePosF) && HMUU < 1 && money >= 60000) {
+		if (event.type == sf::Event::MouseButtonPressed && bnhButton.getGlobalBounds().contains(mousePosF) && HMUU == 1 && money >= 60000) {
 
+			defaultClass = false;
 			rookieClass = true;
+
+			stageOneHouse = false;
+			stageTwoHouse = true;
+
+			Tractor.setPosition(490, 350);
+
+			moneyWorth += 0.5;
+			HMUU += 1;
 
 		}
 
@@ -386,7 +406,8 @@ int main() {
 
 		time = clock.getElapsedTime();
 
-		std::cout << 1.0f / time.asSeconds() << std::endl;
+		//std::cout << 1.0f / time.asSeconds() << std::endl;
+		std::cout << moneyWorth << std::endl;
 
 		clock.restart().asSeconds();
 
@@ -400,7 +421,12 @@ int main() {
 
 		window.draw(Sun);
 
-		window.draw(Barn);
+		if (stageOneHouse == true) {
+			window.draw(Barn);
+		}
+		if (stageTwoHouse == true) {
+			window.draw(BarnTwo);
+		}
 
 		window.draw(Tractor);
 
@@ -427,3 +453,4 @@ int main() {
 	return 0;
 
 }
+
