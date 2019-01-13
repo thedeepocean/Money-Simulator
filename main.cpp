@@ -213,6 +213,18 @@ int main() {
 	upgradeHouseSign.setPosition(635, 215);
 
 
+	sf::Text buyNewHouseSign;
+
+	buyNewHouseSign.setFont(font);
+
+	buyNewHouseSign.setString("Buy New House");
+
+	buyNewHouseSign.setFillColor(sf::Color::Black);
+
+	buyNewHouseSign.setCharacterSize(15);
+
+	buyNewHouseSign.setPosition(635, 290);
+
 
 	sf::Texture SunTexture;
 
@@ -291,7 +303,6 @@ int main() {
 	Barn.setScale(0.5f, 0.5f);
 
 
-
 	sf::RectangleShape uphButton;
 
 	uphButton.setSize(sf::Vector2f(185, 50));
@@ -301,6 +312,13 @@ int main() {
 	uphButton.setPosition(630, 200);
 
 
+	sf::RectangleShape bnhButton;
+
+	bnhButton.setSize(sf::Vector2f(185, 50));
+
+	bnhButton.setFillColor(sf::Color::Yellow);
+
+	bnhButton.setPosition(630, 275);
 
 	//music.play();
 
@@ -337,6 +355,12 @@ int main() {
 			money -= 25000;
 
 			HMUU += 1;
+
+		}
+
+		if (event.type == sf::Event::MouseButtonPressed && bnhButton.getGlobalBounds().contains(mousePosF) && HMUU < 1 && money >= 60000) {
+
+			rookieClass = true;
 
 		}
 
@@ -388,9 +412,11 @@ int main() {
 
 		window.draw(uphButton);
 
+		window.draw(bnhButton);
+
 		window.draw(upgradeHouseSign);
 
-
+		window.draw(buyNewHouseSign);
 
 		window.display();
 
