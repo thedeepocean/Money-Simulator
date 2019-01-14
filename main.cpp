@@ -38,7 +38,8 @@ std::string toString(T arg) {
 
 int HMUU = 0;
 
-
+bool firstSetting = true;
+bool secondSetting = false;
 
 float moneyWorth = 3.0;
 
@@ -66,7 +67,7 @@ bool millionaireClass = false;
 
 
 
-float money = 110000.0;
+long float money = 0.0;
 
 
 
@@ -229,7 +230,12 @@ int main() {
 
 	buyNewHouseSign.setPosition(635, 290);
 
-
+	sf::Text settingSign;
+	settingSign.setFont(font);
+	settingSign.setString("Settings");
+	settingSign.setFillColor(sf::Color::White);
+	settingSign.setCharacterSize(25);
+	settingSign.setPosition(3, 60);
 
 	sf::Text BuyMV;
 
@@ -344,7 +350,8 @@ int main() {
 
 	uphButton.setFillColor(sf::Color::Yellow);
 
-	uphButton.setPosition(630, 200);
+	//uphButton.setPosition(630, 200);
+	uphButton.setPosition(1000, 1000);
 
 
 	sf::RectangleShape bnhButton;
@@ -353,7 +360,8 @@ int main() {
 
 	bnhButton.setFillColor(sf::Color::Yellow);
 
-	bnhButton.setPosition(630, 275);
+	//bnhButton.setPosition(630, 275);
+	bnhButton.setPosition(1000, 1000);
 
 
 	sf::RectangleShape bncButton;
@@ -362,8 +370,25 @@ int main() {
 
 	bncButton.setFillColor(sf::Color::Yellow);
 
-	bncButton.setPosition(630, 350);
+	//bncButton.setPosition(630, 350);
+	bnhButton.setPosition(1000, 1000);
 
+
+	sf::RectangleShape sttngButton;
+	sttngButton.setSize(sf::Vector2f(160, 50));
+	sttngButton.setFillColor(sf::Color::Black);
+	sttngButton.setPosition(0, 50);
+
+	sf::RectangleShape sttngButtonT;
+	sttngButtonT.setSize(sf::Vector2f(160, 50));
+	sttngButtonT.setFillColor(sf::Color::Black);
+	sttngButtonT.setPosition(0, 50);
+	
+	// setting button background
+	sf::RectangleShape sttngBtnBg;
+	sttngBtnBg.setSize(sf::Vector2f(200, 200));
+	sttngBtnBg.setFillColor(sf::Color::Black);
+	sttngBtnBg.setPosition(155, 50);
 
 	//music.play();
 
@@ -419,15 +444,35 @@ int main() {
 
 		}
 
-		if (event.type == sf::Event::MouseButtonPressed && bncButton.getGlobalBounds().contains(mousePosF) && money >= 25000) {
-			
-			rookieCar = true;
+		if (event.type == sf::Event::MouseButtonPressed && bncButton.getGlobalBounds().contains(mousePosF) && HMUU == 2 && money >= 25000) {
 
+
+			rookieCar = true;
+			moneyWorth += 0.5;
 			money -= 25000;
+			HMUU += 1;
 
 		}
 
+		if (event.type == sf::Event::MouseButtonPressed && sttngButton.getGlobalBounds().contains(mousePosF)) {
 
+			firstSetting = false;
+			secondSetting = true;
+
+			sttngButtonT.setPosition(0, 95);
+			settingSign.setPosition(3, 105);
+
+		}
+
+		if (event.type == sf::Event::MouseButtonPressed && sttngButtonT.getGlobalBounds().contains(mousePosF)) {
+
+			firstSetting = true;
+			secondSetting = false;
+
+			sttngButtonT.setPosition(0, 50);
+			settingSign.setPosition(3, 60);
+
+		}
 
 		addMoney();
 
@@ -449,8 +494,9 @@ int main() {
 
 		time = clock.getElapsedTime();
 
-		//std::cout << 1.0f / time.asSeconds() << std::endl;
-		std::cout << moneyWorth << std::endl;
+		std::cout << 1.0f / time.asSeconds() << std::endl;
+		//std::cout << moneyWorth << std::endl;
+		//std::cout << firstSetting << "\n" << secondSetting << std::endl << std::endl;
 
 		clock.restart().asSeconds();
 
@@ -484,17 +530,41 @@ int main() {
 
 		window.draw(moneySign);
 
-		window.draw(uphButton);
+		if (firstSetting == true) {
+			window.draw(sttngButton);
+			uphButton.setPosition(1000, 1000);
+			bnhButton.setPosition(1000, 1000);
+			bncButton.setPosition(1000, 1000);
+			//sttngButtonT.setPosition(1000, 1000);
+			//sttngButton.setPosition(0, 50);
+		}
+		if (secondSetting == true) {
+			window.draw(sttngButtonT);
+			window.draw(sttngBtnBg);
 
-		window.draw(bnhButton);
+			//sttngButtonT.setPosition(0, 50);
+			//sttngButton.setPosition(1000, 1000);
+			uphButton.setPosition(162.65, 50);
+			bnhButton.setPosition(162.65, 125);
+			bncButton.setPosition(162.65, 200);
 
-		window.draw(bncButton);
+			upgradeHouseSign.setPosition(165, 70);
+			buyNewHouseSign.setPosition(165, 145);
+			BuyMV.setPosition(175, 215);
 
-		window.draw(upgradeHouseSign);
+			window.draw(uphButton);
+			window.draw(bnhButton);
+			window.draw(bncButton);
 
-		window.draw(buyNewHouseSign);
 
-		window.draw(BuyMV);
+			window.draw(upgradeHouseSign);
+			window.draw(buyNewHouseSign);
+			window.draw(BuyMV);
+		}
+
+
+		window.draw(settingSign);
+
 
 		window.display();
 
@@ -505,4 +575,3 @@ int main() {
 	return 0;
 
 }
-
